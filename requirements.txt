@@ -1,0 +1,20 @@
+# Text Merge Application - Production Dependencies
+# Python 3.9+
+
+# Core dependencies
+python-docx==0.8.11          # DOCX export support
+reportlab==4.0.9             # PDF generation with Unicode/Thai support
+fonttools==4.46.0            # TTF font handling for ReportLab
+pathspec==0.12.1             # Advanced path operations
+
+# GUI dependencies
+customtkinter==5.2.2         # Modern CustomTkinter for desktop GUI (Python 3.14+ compatible)
+
+# Utilities
+typing-extensions==4.9.0     # Enhanced type hints for older Python versions
+
+# Development/Optional (uncomment as needed)
+# pytest==7.4.3              # Unit testing
+# black==23.12.0             # Code formatting
+# pylint==3.0.3              # Code linting
+# mypy==1.7.1                # Static type checking
