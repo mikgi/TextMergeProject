@@ -4,6 +4,7 @@ Supports UTF-8 encoding including Thai language and other multi-byte characters.
 """
 
 import logging
+import re
 from pathlib import Path
 from typing import Optional
 
@@ -22,6 +23,22 @@ class FileMerger:
         """
         self.config = config
         self.logger = logging.getLogger(__name__)
+
+    @staticmethod
+    def _natural_sort_key(file_path: Path) -> tuple:
+        """
+        Build a natural sort key that keeps numeric segments numeric.
+        Works for English and Thai file names (e.g. บทที่ 2 < บทที่ 10).
+        """
+        name = file_path.stem.casefold()
+        parts = re.split(r"(\d+)", name)
+        key = []
+        for part in parts:
+            if part.isdigit():
+                key.append((0, int(part), len(part)))
+            else:
+                key.append((1, part))
+        return tuple(key)
 
     def merge_files(
         self,
@@ -102,7 +119,7 @@ class FileMerger:
         if sort_order == "name":
 
             text_files.sort(
-                key=lambda x: x.name
+                key=self._natural_sort_key
             )
 
         elif sort_order == "date":
